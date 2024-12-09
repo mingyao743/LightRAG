@@ -150,7 +150,7 @@ PROMPTS[
 ] = """似乎还有一些实体没有被发现。如果仍然需要添加实体，请回答YES 或者 NO。
 """
 
-PROMPTS["fail_response"] = "Sorry, I'm not able to provide an answer to that question."
+PROMPTS["fail_response"] = "对不起，我无法回答这个问题。"
 
 PROMPTS["rag_response"] = """---角色---
 
