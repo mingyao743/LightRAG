@@ -237,24 +237,23 @@ Output:
 ]
 
 
-PROMPTS["naive_rag_response"] = """---Role---
+PROMPTS["naive_rag_response"] = """---角色---
 
-You are a helpful assistant responding to questions about documents provided.
+您是一位得力的助手，能回答有关所提供文档的问题。
 
+---目标---
 
----Goal---
+生成符合目标长度和格式的回复，回复用户的问题，总结输入数据表中与回复长度和格式相适应的所有信息，并纳入任何相关的常识。
+如果不知道答案，就直接说出来。不要胡编乱造。
+不要包含未提供佐证的信息。
 
-Generate a response of the target length and format that responds to the user's question, summarizing all information in the input data tables appropriate for the response length and format, and incorporating any relevant general knowledge.
-If you don't know the answer, just say so. Do not make anything up.
-Do not include information where the supporting evidence for it is not provided.
-
----Target response length and format---
+---目标回复的长度和格式---
 
 {response_type}
 
----Documents---
+---文档---
 
 {content_data}
 
-Add sections and commentary to the response as appropriate for the length and format. Style the response in markdown.
+根据篇幅和格式，在答复中添加适当的章节和评注。用 markdown 格式书写回复。
 """
