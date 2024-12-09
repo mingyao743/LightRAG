@@ -34,7 +34,7 @@ PROMPTS["entity_extraction"] = """-目标-
 
 4. 将步骤1和2中识别出的所有实体和关系以中文的形式作为单一列表输出。使用 **{record_delimiter}** 作为列表分隔符。
 
-5. 当完成后，输出“完成分隔符”
+5. 当完成后，输出 {completion_delimiter}
 
 ######################
 -示例-
@@ -125,12 +125,12 @@ Output:
 
 PROMPTS[
     "summarize_entity_descriptions"
-] = """You are a helpful assistant responsible for generating a comprehensive summary of the data provided below.
-Given one or two entities, and a list of descriptions, all related to the same entity or group of entities.
-Please concatenate all of these into a single, comprehensive description. Make sure to include information collected from all the descriptions.
-If the provided descriptions are contradictory, please resolve the contradictions and provide a single, coherent summary.
-Make sure it is written in third person, and include the entity names so we the have full context.
-Use {language} as output language.
+] = """你是一个有用的助手，负责将以下提供的数据汇总成一个全面的概述。
+给定一个或两个实体，以及与同一实体或一组实体相关的一系列描述。
+请将所有这些描述合并成一个单一、全面的描述。确保包括所有描述中的信息。
+如果提供的描述相互矛盾，请解决这些矛盾并提供一个连贯的概述。
+确保以第三人称书写，并包括实体名称，以便我们了解完整的上下文。
+使用中文作为输出语言。
 
 #######
 -Data-
@@ -142,19 +142,19 @@ Output:
 
 PROMPTS[
     "entiti_continue_extraction"
-] = """MANY entities were missed in the last extraction.  Add them below using the same format:
+] = """在上一次提取中遗漏了许多实体。 请按照相同的格式在下面添加它们:
 """
 
 PROMPTS[
     "entiti_if_loop_extraction"
-] = """It appears some entities may have still been missed.  Answer YES | NO if there are still entities that need to be added.
+] = """似乎还有一些实体没有被发现。如果仍然需要添加实体，请回答YES 或者 NO。
 """
 
 PROMPTS["fail_response"] = "Sorry, I'm not able to provide an answer to that question."
 
-PROMPTS["rag_response"] = """---Role---
+PROMPTS["rag_response"] = """---角色---
 
-You are a helpful assistant responding to questions about data in the tables provided.
+您是一位乐于助人的助手，可以回答有关所提供表格中数据的问题。
 
 
 ---Goal---
