@@ -51,30 +51,49 @@ Text: {input_text}
 """
 
 PROMPTS["entity_extraction_examples"] = [
-    """Example 1:
+    """示例 1:
 
-Entity_types: [person, technology, mission, organization, location]
+Entity_types: [person, role, organization, event, location, concept, date]
+
 Text:
-while Alex clenched his jaw, the buzz of frustration dull against the backdrop of Taylor's authoritarian certainty. It was this competitive undercurrent that kept him alert, the sense that his and Jordan's shared commitment to discovery was an unspoken rebellion against Cruz's narrowing vision of control and order.
-
-Then Taylor did something unexpected. They paused beside Jordan and, for a moment, observed the device with something akin to reverence. “If this tech can be understood..." Taylor said, their voice quieter, "It could change the game for us. For all of us.”
-
-The underlying dismissal earlier seemed to falter, replaced by a glimpse of reluctant respect for the gravity of what lay in their hands. Jordan looked up, and for a fleeting heartbeat, their eyes locked with Taylor's, a wordless clash of wills softening into an uneasy truce.
-
-It was a small transformation, barely perceptible, but one that Alex noted with an inward nod. They had all been brought here by different paths
+利率水平的变化和贷款的难易程度对个人资产和生活方式的影响\n对于大多数家庭来说，利率水平对资产有着深远的影响。在美国，数十年来许多家庭习惯于通过贷款的方式来实现他们的梦想，这产生的影响体
+现在每个月的家庭账单中。遗憾的是，对于大多数家庭来说，日积月累的巨大债务和他们的偿还能力并不匹配，因此产生了不可估量的负面影响。其中最坏的影响莫过于宽松的信贷条件、资产管理的疏忽、收入水平与偿还能力不匹配而
+造成的住宅抵押品的赎回权取消（见图1-2）。\n\n图1-2　房屋没收拍卖占总贷款的比例\n资料来源：Mortgage Bankers Association.\n过去数十年来个人贷款的迅速膨胀是一种文化现象，除了上述提到的几个原因，人口分布也是另>一个重要原因。婴儿潮出生的一代人（特指生于1946~1964年的人）疯狂地利用贷款，来购买喜爱的商品和服务。这场狂欢一直持续到金融危机爆发的2007年，这时贷款的“水龙头”开始关闭了。在新标准下，消费开始有所收敛，存款利>率逐渐上升（见图1-3）。减少债务成为人们新的口头禅，而不再是“记在我账上！”\n无论是什么导致了贷款的迅速上升，事实上，家庭的平均未偿还贷款额超过了其他任何一种贷款额度。表1-1列出了家庭没有能力偿还的巨大的贷款数
+额。需要注意的是，这一额度的减少是随着去杠杆化潮流的推动而发生的。\n表1-1　家庭负债表（2009年12月）　（单位：10亿美元）\n\n如表1-1所示，未偿还的抵押房贷超过了任何一种贷款。这很清楚地表明了利率对家庭资产的影
+响最大限度地体现在抵押房贷利率上。抵押房贷利率直接影响着每个家庭的月度收支状况。我相信读者大多数会有切身体会，并且意识到可调整的抵押房贷利率的变化对美国大多数家庭会产生的巨大影响。许多家庭都被所谓的“引诱利>率”哄骗走上了抵押贷款的不归路。自从2004年6月联邦储备系统进行一系列的利率上调之后，抵押房贷利率也随之上浮，繁重的抵押贷款使很多家庭不堪重负（见图1-2）。\n\n图1-3　今天，“记在我账上！”不再是口头禅\n资料来源：
+Bureau of Economic Analysis and Haver Analytics.\n从中我们可以直接得知追踪利率变化的重要性，也可以了解许多年前影响利率上升或者下降的因素。\n1989年，也就是我开始在债券市场的职业生涯的前一年，我购买了我的第一
+套房子。那年对我来说是特别的一年，我是如此兴奋，因为我实现了拥有一套房子的美国梦。\n虽然房子本身带来的都是骄傲和满足，但当时我并没有意识到与之对应的财务问题。当时我的贷款抵押利率高达惊人的11.25%，这是当时的
+利率。我并没有过多地考虑利率的问题，因为我像其他21世纪初的人们一样，认为房价会一直上升，上升的房价可以抵消利率带来的额外成本。我所犯的错误和后来数百万其他人犯的错误一模一样。\n我最初的判断真是错得离谱！当我
+逐渐意识到这一点时，美联储正在进行一场放缓经济运行速度的调整，其目的在于降低通货膨胀，使房地产市场的价格泡沫破灭。美联储升息的措施不仅给了我，更是给了在经济危机期间像我一样的“房奴”双重打击：我在高额的抵押贷
+款上骑虎难下，房价随着房地产价格泡沫的破灭更是一落千丈。\n随着房地产价格泡沫的破灭，我房子的价格迅速下降了25%。数年来我一直试图再融资，但没有银行愿意考虑答应我的贷款请求，因为我的房子只能作为负资产进行抵押>。因此，我举步维艰。年复一年，我一直为这次失败的房屋投资负担着高额的抵押贷款。\n当时我一无所知，现在终于明白是什么。作为刚刚涉足贷款的人来说，我意识到贷款利率是如此重要，在面对相对来说较高的利率或者和我的收
+入相比较高的利率时一定要三思而后行。我再也不会做出如此草率的、不计后果的借贷决定了。这意味着我需要更加关注债券市场。跟随债券市场的脚步能够帮助我制订更周全的计划，进行更有益的决策。最近的金融危机也给我上了很
+好的一课：如果在信贷龙头收紧时再融资比较困难，那么对这类债务要保持机警，最好不要去承担。\n我还明白了“永远不要和美联储作对”这句谚语的真正含义。美联储对于整体经济和金融市场有着不可估量的影响，也会影响到我自己
+的财富能否得到保障。无论怎么强调这一点的重要性都是不为过的。在第6章我们会深入讨论美联储这种巨大力量的重要性。\n最终我反败为胜了。那是在抵押贷款利率达到21世纪新低的时候，我从负担着最高抵押利率的人摇身一变，>开始负担最低的抵押利率。通过和债券市场亦步亦趋，我学会了在利率下跌时进行投机。而且，通过密切观察美联储的一举一动，我总是可以站在投资和经济运行的制高点。\n各位，请和我一样紧紧跟随债券市场的脚步，并且请将图1-1深深印在脑海里。让它时时刻刻提醒你债券市场对你的个人财富的影响有多么巨大。
 ################
 Output:
-("entity"{tuple_delimiter}"Alex"{tuple_delimiter}"person"{tuple_delimiter}"Alex is a character who experiences frustration and is observant of the dynamics among other characters."){record_delimiter}
-("entity"{tuple_delimiter}"Taylor"{tuple_delimiter}"person"{tuple_delimiter}"Taylor is portrayed with authoritarian certainty and shows a moment of reverence towards a device, indicating a change in perspective."){record_delimiter}
-("entity"{tuple_delimiter}"Jordan"{tuple_delimiter}"person"{tuple_delimiter}"Jordan shares a commitment to discovery and has a significant interaction with Taylor regarding a device."){record_delimiter}
-("entity"{tuple_delimiter}"Cruz"{tuple_delimiter}"person"{tuple_delimiter}"Cruz is associated with a vision of control and order, influencing the dynamics among other characters."){record_delimiter}
-("entity"{tuple_delimiter}"The Device"{tuple_delimiter}"technology"{tuple_delimiter}"The Device is central to the story, with potential game-changing implications, and is revered by Taylor."){record_delimiter}
-("relationship"{tuple_delimiter}"Alex"{tuple_delimiter}"Taylor"{tuple_delimiter}"Alex is affected by Taylor's authoritarian certainty and observes changes in Taylor's attitude towards the device."{tuple_delimiter}"power dynamics, perspective shift"{tuple_delimiter}7){record_delimiter}
-("relationship"{tuple_delimiter}"Alex"{tuple_delimiter}"Jordan"{tuple_delimiter}"Alex and Jordan share a commitment to discovery, which contrasts with Cruz's vision."{tuple_delimiter}"shared goals, rebellion"{tuple_delimiter}6){record_delimiter}
-("relationship"{tuple_delimiter}"Taylor"{tuple_delimiter}"Jordan"{tuple_delimiter}"Taylor and Jordan interact directly regarding the device, leading to a moment of mutual respect and an uneasy truce."{tuple_delimiter}"conflict resolution, mutual respect"{tuple_delimiter}8){record_delimiter}
-("relationship"{tuple_delimiter}"Jordan"{tuple_delimiter}"Cruz"{tuple_delimiter}"Jordan's commitment to discovery is in rebellion against Cruz's vision of control and order."{tuple_delimiter}"ideological conflict, rebellion"{tuple_delimiter}5){record_delimiter}
-("relationship"{tuple_delimiter}"Taylor"{tuple_delimiter}"The Device"{tuple_delimiter}"Taylor shows reverence towards the device, indicating its importance and potential impact."{tuple_delimiter}"reverence, technological significance"{tuple_delimiter}9){record_delimiter}
-("content_keywords"{tuple_delimiter}"power dynamics, ideological conflict, discovery, rebellion"){completion_delimiter}
+("entity"{tuple_delimiter}利率水平{tuple_delimiter}concept{tuple_delimiter}影响个人资产和生活方式的重要因素，与贷款难易程度相关){record_delimiter}
+("entity"{tuple_delimiter}贷款{tuple_delimiter}concept{tuple_delimiter}家庭实现梦想的手段，与利率水平和个人资产有直接关系){record_delimiter}
+("entity"{tuple_delimiter}美国{tuple_delimiter}location{tuple_delimiter}文中提到的国家，许多家庭通过贷款实现梦想){record_delimiter}
+("entity"{tuple_delimiter}金融危机{tuple_delimiter}event{tuple_delimiter}2007年发生的事件，导致贷款“水龙头”开始关闭){record_delimiter}
+("entity"{tuple_delimiter}存款利率{tuple_delimiter}concept{tuple_delimiter}与消费和贷款有关，新标准下逐渐上升){record_delimiter}
+("entity"{tuple_delimiter}家庭负债表{tuple_delimiter}concept{tuple_delimiter}表1-1中列出的家庭未偿还贷款额，反映家庭负债情况){record_delimiter}
+("entity"{tuple_delimiter}抵押房贷{tuple_delimiter}concept{tuple_delimiter}家庭负债表中未偿还额最大的贷款类型，直接影响家庭月度收支){record_delimiter}
+("entity"{tuple_delimiter}联邦储备系统{tuple_delimiter}organization{tuple_delimiter}美国中央银行，通过调整利率影响经济和贷款市场){record_delimiter}
+("entity"{tuple_delimiter}债券市场{tuple_delimiter}concept{tuple_delimiter}作者职业生涯开始的地方，与利率变化紧密相关){record_delimiter}
+("entity"{tuple_delimiter}1989年{tuple_delimiter}date{tuple_delimiter}作者购买第一套房子的年份，当时利率高达11.25%){record_delimiter}
+("entity"{tuple_delimiter}21世纪初{tuple_delimiter}date{tuple_delimiter}作者和其他许多人认为房价会一直上升的时期){record_delimiter}
+("entity"{tuple_delimiter}经济危机{tuple_delimiter}event{tuple_delimiter}导致房地产市场价格泡沫破灭的时期){record_delimiter}
+("entity"{tuple_delimiter}美联储{tuple_delimiter}organization{tuple_delimiter}美国联邦储备系统的简称，对经济和金融市场有巨大影响){record_delimiter}
+("relationship"{tuple_delimiter}利率水平{tuple_delimiter}贷款{tuple_delimiter}利率水平的变化直接影响贷款的难易程度和成本{tuple_delimiter}利率，贷款{tuple_delimiter}8){record_delimiter}
+("relationship"{tuple_delimiter}美国{tuple_delimiter}贷款{tuple_delimiter}美国家庭通过贷款实现梦想，受利率水平影响{tuple_delimiter}美国，贷款{tuple_delimiter}7){record_delimiter}
+("relationship"{tuple_delimiter}金融危机{tuple_delimiter}贷款{tuple_delimiter}金融危机导致贷款“水龙头”开始关闭{tuple_delimiter}金融危机，贷款{tuple_delimiter}8){record_delimiter}
+("relationship"{tuple_delimiter}存款利率{tuple_delimiter}消费{tuple_delimiter}存款利率的上升导致消费收敛{tuple_delimiter}存款利率，消费{tuple_delimiter}7){record_delimiter}
+("relationship"{tuple_delimiter}抵押房贷{tuple_delimiter}家庭负债表{tuple_delimiter}抵押房贷是家庭负债表中未偿还额最大的贷款类型{tuple_delimiter}抵押房贷，家庭负债表{tuple_delimiter}8){record_delimiter}
+("relationship"{tuple_delimiter}联邦储备系统{tuple_delimiter}抵押房贷{tuple_delimiter}联邦储备系统通过调整利率影响抵押房贷利率{tuple_delimiter}联邦储备系统，抵押房贷{tuple_delimiter}9){record_delimiter}
+("relationship"{tuple_delimiter}债券市场{tuple_delimiter}利率水平{tuple_delimiter}债券市场与利率水平变化紧密相关{tuple_delimiter}债券市场，利率水平{tuple_delimiter}8){record_delimiter}
+("relationship"{tuple_delimiter}1989年{tuple_delimiter}利率水平{tuple_delimiter}1989年作者购房时利率高达11.25%{tuple_delimiter}1989年，利率水平{tuple_delimiter}7){record_delimiter}
+("relationship"{tuple_delimiter}美联储{tuple_delimiter}经济危机{tuple_delimiter}美联储的升息措施导致经济危机期间许多人面临双重打击{tuple_delimiter}美联储，经济危机{tuple_delimiter}8){record_delimiter}
+("content_keywords"{tuple_delimiter}利率水平，贷款，个人资产，金融危机，美联储，债券市场){completion_delimiter}
 #############################""",
     """Example 2:
 
