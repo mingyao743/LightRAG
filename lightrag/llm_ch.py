@@ -2,7 +2,7 @@ GRAPH_FIELD_SEP = "<SEP>"
 
 PROMPTS = {}
 
-PROMPTS["DEFAULT_LANGUAGE"] = "English"
+PROMPTS["DEFAULT_LANGUAGE"] = "Chinese"
 PROMPTS["DEFAULT_TUPLE_DELIMITER"] = "<|>"
 PROMPTS["DEFAULT_RECORD_DELIMITER"] = "##"
 PROMPTS["DEFAULT_COMPLETION_DELIMITER"] = "<|COMPLETE|>"
@@ -10,45 +10,44 @@ PROMPTS["process_tickers"] = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "
 
 PROMPTS["DEFAULT_ENTITY_TYPES"] = ["organization", "person", "geo", "event"]
 
-PROMPTS["entity_extraction"] = """-Goal-
-Given a text document that is potentially relevant to this activity and a list of entity types, identify all entities of those types from the text and all relationships among the identified entities.
-Use {language} as output language.
+PROMPTS["entity_extraction"] = """-目标-
+针对可能与此活动相关的文本文档和实体类型列表，从文本中识别出所有此类实体，并识别出所有已识别实体之间的关系。
+使用{语言}作为输出语言。
 
--Steps-
-1. Identify all entities. For each identified entity, extract the following information:
-- entity_name: Name of the entity, use same language as input text. If English, capitalized the name.
-- entity_type: One of the following types: [{entity_types}]
-- entity_description: Comprehensive description of the entity's attributes and activities
-Format each entity as ("entity"{tuple_delimiter}<entity_name>{tuple_delimiter}<entity_type>{tuple_delimiter}<entity_description>)
+-步骤-1. 识别所有实体。对于每个识别出的实体，提取以下信息：
+- entity_name：实体名称，使用中文。
+- entity_type：以下类型之一：[{entity_types}]
+- entity_description：实体属性和活动的全面描述
+将每个实体格式化为 ("entity"{tuple_delimiter}<entity_name>{tuple_delimiter}<entity_type>{tuple_delimiter}<entity_description>)
 
-2. From the entities identified in step 1, identify all pairs of (source_entity, target_entity) that are *clearly related* to each other.
-For each pair of related entities, extract the following information:
-- source_entity: name of the source entity, as identified in step 1
-- target_entity: name of the target entity, as identified in step 1
-- relationship_description: explanation as to why you think the source entity and the target entity are related to each other
-- relationship_strength: a numeric score indicating strength of the relationship between the source entity and target entity
-- relationship_keywords: one or more high-level key words that summarize the overarching nature of the relationship, focusing on concepts or themes rather than specific details
-Format each relationship as ("relationship"{tuple_delimiter}<source_entity>{tuple_delimiter}<target_entity>{tuple_delimiter}<relationship_description>{tuple_delimiter}<relationship_keywords>{tuple_delimiter}<relationship_strength>)
+2. 从步骤1中识别出的实体中，找出所有（源实体，目标实体）对，它们之间显然存在关联。
+对于每个相关的实体对，提取以下信息：
+- 源实体：如步骤1中所识别出的，源实体的名称
+- 目标实体：如步骤1中所识别出的，目标实体的名称
+- 关系描述：解释您认为源实体和目标实体之间存在关联的原因
+- 关系强度：表示源实体和目标实体之间关系强度的数字评分
+- 关系关键词：一个或多个高级关键字，概述了关系的总体性质，侧重于概念或主题，而不是具体细节
+将每个关系格式化为 ("relationship"{tuple_delimiter}<source_entity>{tuple_delimiter}<target_entity>{tuple_delimiter}<relationship_description>{tuple_delimiter}<relationship_keywords>{tuple_delimiter}<relationship_strength>)
 
-3. Identify high-level key words that summarize the main concepts, themes, or topics of the entire text. These should capture the overarching ideas present in the document.
-Format the content-level key words as ("content_keywords"{tuple_delimiter}<high_level_keywords>)
+3. 找出能够概括整个文本主要概念、主题或话题的高级关键词。这些关键词应能捕捉文档中所包含的总体思想。
+将内容级关键词以("content_keywords"{tuple_delimiter}<high_level_keywords>)的格式进行格式化。
 
-4. Return output in {language} as a single list of all the entities and relationships identified in steps 1 and 2. Use **{record_delimiter}** as the list delimiter.
+4. 将步骤1和2中识别出的所有实体和关系以中文的形式作为单一列表输出。使用 **{record_delimiter}** 作为列表分隔符。
 
-5. When finished, output {completion_delimiter}
+5. 当完成后，输出“完成分隔符”
 
 ######################
--Examples-
+-示例-
 ######################
 {examples}
 
 #############################
--Real Data-
+-真实数据-
 ######################
 Entity_types: {entity_types}
 Text: {input_text}
 ######################
-Output:
+输出：
 """
 
 PROMPTS["entity_extraction_examples"] = [
