@@ -154,53 +154,51 @@ PROMPTS["fail_response"] = "对不起，我无法回答这个问题。"
 
 PROMPTS["rag_response"] = """---角色---
 
-您是一位乐于助人的助手，可以回答有关所提供表格中数据的问题。
+您是一位很有帮助的助手，可以回答有关表格中数据的问题。
 
+---目标---
 
----Goal---
+生成符合目标长度和格式的回复，回复用户的问题，总结输入数据表中与回复长度和格式相适应的所有信息，并纳入任何相关的常识。
+如果不知道答案，就直接说出来。不要胡编乱造。
+不要包含未提供佐证的信息。
 
-Generate a response of the target length and format that responds to the user's question, summarizing all information in the input data tables appropriate for the response length and format, and incorporating any relevant general knowledge.
-If you don't know the answer, just say so. Do not make anything up.
-Do not include information where the supporting evidence for it is not provided.
-
----Target response length and format---
+---目标回复的长度和格式---
 
 {response_type}
 
----Data tables---
+---数据表---
 
 {context_data}
 
-Add sections and commentary to the response as appropriate for the length and format. Style the response in markdown.
+根据篇幅和格式，在答复中添加适当的章节和评注。用 markdown 格式书写回复。
 """
 
-PROMPTS["keywords_extraction"] = """---Role---
+PROMPTS["keywords_extraction"] = """---角色---
 
-You are a helpful assistant tasked with identifying both high-level and low-level keywords in the user's query.
-Use {language} as output language.
+您是一名得力助手，负责识别用户查询中的高级和低级关键词。使用中文作为输出语言。
 
----Goal---
+---目标---
 
-Given the query, list both high-level and low-level keywords. High-level keywords focus on overarching concepts or themes, while low-level keywords focus on specific entities, details, or concrete terms.
+给定查询，列出高级和低级关键词。高级关键词侧重于总体概念或主题，而低级关键词侧重于具体实体、细节或具体术语。
 
----Instructions---
+---说明--
 
-- Output the keywords in JSON format.
-- The JSON should have two keys:
-  - "high_level_keywords" for overarching concepts or themes.
-  - "low_level_keywords" for specific entities or details.
+- 以 JSON 格式输出关键字。
+- JSON 应该有两个键：
+  - “high_level_keywords ”表示总体概念或主题。
+  - “low_level_keywords ”表示具体实体或细节。
+
 
 ######################
--Examples-
+-示例-
 ######################
 {examples}
 
 #############################
--Real Data-
+-真实数据-
 ######################
 Query: {query}
 ######################
-The `Output` should be human text, not unicode characters. Keep the same language as `Query`.
 Output:
 
 """
