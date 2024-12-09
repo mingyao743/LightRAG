@@ -300,6 +300,16 @@ def initialize_hf_model(model_name):
 
     return hf_model, hf_tokenizer
 
+import torch
+from vllm import LLM, SamplingParams
+@lru_cache(maxsize=1)
+def initialize_hf_model_vllm(model_name):
+    max_model_len, tp_size = 8192, torch.cuda.device_count()
+    hf_tokenizer = AutoTokenizer.from_pretrained(model_name)
+    hf_model = LLM(model=model_name, tensor_parallel_size=tp_size, max_model_len=max_model_len, trust_remote_code=True, enforce_eager=True)
+    #sampling_params = SamplingParams(temperature=0.3, max_tokens=256, stop_token_ids=[tokenizer.eos_token_id])
+    return hf_model, hf_tokenizer
+
 
 @retry(
     stop=stop_after_attempt(3),
@@ -313,7 +323,14 @@ async def hf_model_if_cache(
     history_messages=[],
     **kwargs,
 ) -> str:
+    use_vllm = kwargs.pop('use_vllm', False)
     model_name = model
+    if not use_vllm:
+        hf_model, hf_tokenizer = initialize_hf_model(model_name)
+    else:
+        hf_model, hf_tokenizer = initialize_hf_model_vllm(model_name)
+        sampling_params = SamplingParams(temperature=0.3, stop_token_ids=[hf_tokenizer.eos_token_id])
+
     hf_model, hf_tokenizer = initialize_hf_model(model_name)
     hashing_kv: BaseKVStorage = kwargs.pop("hashing_kv", None)
     messages = []
@@ -322,6 +339,12 @@ async def hf_model_if_cache(
     messages.extend(history_messages)
     messages.append({"role": "user", "content": prompt})
 
+    if use_vllm:
+       prompt_token_ids = [hf_tokenizer.apply_chat_template(messages, add_generation_prompt=True)]
+       outputs = hf_model.generate(prompt_token_ids=prompt_token_ids, sampling_params=sampling_params)
+       generated_text = outputs[0].outputs[0].text
+       return generated_text
+    
     # Handle cache
     mode = kwargs.pop("mode", "default")
     args_hash = compute_args_hash(model, messages)
