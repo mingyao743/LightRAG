@@ -12,7 +12,7 @@ PROMPTS["DEFAULT_ENTITY_TYPES"] = ["organization", "person", "geo", "event"]
 
 PROMPTS["entity_extraction"] = """-目标-
 针对可能与此活动相关的文本文档和实体类型列表，从文本中识别出所有此类实体，并识别出所有已识别实体之间的关系。
-使用{语言}作为输出语言。
+使用中文作为输出语言。
 
 -步骤-1. 识别所有实体。对于每个识别出的实体，提取以下信息：
 - entity_name：实体名称，使用中文。
