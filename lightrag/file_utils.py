@@ -1,8 +1,10 @@
 import re, os
 import jionlp as jio
+import torch
 from moviepy.editor import VideoFileClip
 from bs4 import BeautifulSoup
 from ebooklib import epub
+from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
 
 
 def merge_newlines(text):
@@ -35,8 +37,32 @@ def extract_audio_from_video(video_path, out_path):
     clip = VideoFileClip(video_path)
     clip.audio.write_audiofile(out_path)
 
-def extract_text_from_audio(audio_path):
-    """ """
+# def extract_text_from_audio(audio_path):
+#     """ """
+class WhisperWrapper():
+
+    def __init__(self, model_id):
+        device = "cuda:0" if torch.cuda.is_available() else "cpu"
+        torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
+        model = AutoModelForSpeechSeq2Seq.from_pretrained(
+            model_id, torch_dtype=torch_dtype, low_cpu_mem_usage=True, use_safetensors=True
+        )
+        model.to(device)
+        processor = AutoProcessor.from_pretrained(model_id)
+        self.pipe = pipeline(
+            "automatic-speech-recognition",
+            model=model,
+            tokenizer=processor.tokenizer,
+            feature_extractor=processor.feature_extractor,
+            torch_dtype=torch_dtype,
+            device=device,
+            return_timestamps=True,
+        )
+
+    def transcript(self, audio_path):
+        result = self.pipe(audio_path)
+        result = result['text']
+        return result
 
 def extract_content_from_xhs(url):
     r = requests.get(url)
