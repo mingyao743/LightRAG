@@ -304,7 +304,7 @@ import torch
 from vllm import LLM, SamplingParams
 @lru_cache(maxsize=1)
 def initialize_hf_model_vllm(model_name):
-    max_model_len, tp_size = 16384, torch.cuda.device_count()
+    max_model_len, tp_size = 32768, torch.cuda.device_count()
     hf_tokenizer = AutoTokenizer.from_pretrained(model_name)
     hf_model = LLM(model=model_name, tensor_parallel_size=tp_size, max_model_len=max_model_len, trust_remote_code=True, enforce_eager=True)
     #sampling_params = SamplingParams(temperature=0.3, max_tokens=256, stop_token_ids=[tokenizer.eos_token_id])
@@ -329,7 +329,7 @@ async def hf_model_if_cache(
         hf_model, hf_tokenizer = initialize_hf_model(model_name)
     else:
         hf_model, hf_tokenizer = initialize_hf_model_vllm(model_name)
-        sampling_params = SamplingParams(temperature=0.3, max_tokens=512,stop_token_ids=[hf_tokenizer.eos_token_id])
+        sampling_params = SamplingParams(temperature=0.3, max_tokens=1024,stop_token_ids=[hf_tokenizer.eos_token_id])
 
     hf_model, hf_tokenizer = initialize_hf_model(model_name)
     hashing_kv: BaseKVStorage = kwargs.pop("hashing_kv", None)
