@@ -127,7 +127,7 @@ Output:
 ("relationship"{tuple_delimiter}鲜鱼店的音乐人{tuple_delimiter}水原芹{tuple_delimiter}鲜鱼店的音乐人可能是水原芹弟弟的救命恩人，也是〈重生〉的作者{tuple_delimiter}救命恩人{tuple_delimiter}5){record_delimiter}
 ("relationship"{tuple_delimiter}水原芹{tuple_delimiter}丸光园{tuple_delimiter}水原芹和她弟弟在丸光园长大，与敦也他们有共同的背景{tuple_delimiter}成长背景{tuple_delimiter}5){record_delimiter}
 ("relationship"{tuple_delimiter}敦也{tuple_delimiter}奥运的女人{tuple_delimiter}敦也和奥运的女人有过书信往来，提供建议{tuple_delimiter}书信往来{tuple_delimiter}3){record_delimiter}
-("content_keywords"{tuple_delimiter}信件交流{tuple_delimiter}音乐梦想{tuple_delimiter}救命恩人{tuple_delimiter}孤儿院{tuple_delimiter}时间旅行){record_delimiter}
+("content_keywords"{tuple_delimiter}信件交流{tuple_delimiter}音乐梦想{tuple_delimiter}救命恩人{tuple_delimiter}孤儿院{tuple_delimiter}时间旅行){completion_delimiter}
 #############################""",
 ]
 
