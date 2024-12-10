@@ -22,3 +22,9 @@ tiktoken
 torch
 transformers
 xxhash
+
+# File packages
+ebooklib
+jionlp
+BeautifulSoup4
+moviepy
