@@ -33,6 +33,9 @@ def extract_audio_from_video(video_path, out_path):
     clip = VideoFileClip(video_path)
     clip.audio.write_audiofile(out_path)
 
+def extract_text_from_audio(audio_path):
+    """ """
+
 def extract_content_from_xhs(url):
     r = requests.get(url)
     soup = BeautifulSoup(r.content)
