@@ -25,7 +25,7 @@ from .base import (
     TextChunkSchema,
     QueryParam,
 )
-from .prompt_book_ch import GRAPH_FIELD_SEP, PROMPTS
+from .prompt.prompt_book_ch import GRAPH_FIELD_SEP, PROMPTS
 
 
 def chunking_by_token_size(
