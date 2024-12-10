@@ -137,7 +137,7 @@ class EpubExtracter():
         # match content to navigation tree
         def recur(ll):
             for l in ll:
-                if l['href'] in h2c:
+                if l['href'] in href_contents:
                     l['content'] = '\n'.join(href_contents[l['href']])
                 if 'children' in l:
                     recur(l['children'])
