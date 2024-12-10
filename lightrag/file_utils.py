@@ -2,6 +2,8 @@ import re, os
 import jionlp as jio
 from moviepy.editor import VideoFileClip
 from bs4 import BeautifulSoup
+from ebooklib import epub
+
 
 def merge_newlines(text):
     return re.sub(r'\n+', '\n', text)
@@ -43,6 +45,37 @@ def extract_content_from_xhs(url):
     text = items[0].text if len(items) > 0 else ''
     return text
 
+def parse_nav_points(nav_points, hrefs):
+    nodes = []
+    for nav_point in nav_points:
+        if isinstance(nav_point, epub.Link) or isinstance(nav_point, epub.Section):
+            title = nav_point.title
+            href = nav_point.href
+            children = []
+        elif isinstance(nav_point, tuple):
+            title = nav_point[0].title
+            href = nav_point[0].href
+            children = nav_point[1]
+        else:
+            title = None
+            href = None
+            Children = []
+
+        if href is not None: hrefs.append(href)
+
+        node = {'title': title, 'href': href}
+        if len(children) != 0:
+            children = parse_nav_points(children, hrefs)
+            node['children'] = node
+        nodes.append(node)
+    return nodes
+
 class EpubExtracter():
-    def __init__(self):
-        """ """
+    def __init__(self, file_path):
+        self.book = epub.read_epub(file_path)
+        self.build_navigations()
+
+    def build_navigations(self):
+        toc = self.book.toc
+        hrefs = []
+        self.navigatin, self.hrefs = parse_nav_points(toc, hrefs)
