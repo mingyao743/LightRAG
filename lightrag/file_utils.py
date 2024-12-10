@@ -74,8 +74,73 @@ class EpubExtracter():
     def __init__(self, file_path):
         self.book = epub.read_epub(file_path)
         self.build_navigations()
+        self.build_navi_content()
 
     def build_navigations(self):
         toc = self.book.toc
         hrefs = []
-        self.navigatin, self.hrefs = parse_nav_points(toc, hrefs)
+        self.navigatin = parse_nav_points(toc, hrefs)
+        self.hrefs = hrefs
+        print(f'{len(self.hrefs)} navigation links found')
+
+    def extract_contnt(self, href, chunks):
+        soup = BeautifulSoup(self.book.get_item_with_href(href).get_content())
+        if len(chunks) == 0:
+            content = soup.get_text()
+            content = clean_content(content)
+            return { href:[content] }
+        elif len(chunks) == 1:
+            content = soup.get_text()
+            content = clean_content(content)
+            return { href + '#' + chunks[0]: [content] }
+        else:
+            href_tags = {href:[]}
+            cur_chunk = None
+            for div in soup.find('body'):
+                if div.name is None: continue
+                if div.get('id') in chunks:
+                    cur_chunk = div.get('id')
+                    href_tags[href+'#'+cur_chunk] = []
+    
+                if cur_chunk is not None:
+                    href_tags[href+'#'+cur_chunk].append(div)
+                if cur_chunk is None:
+                    href_tags[href].append(div)
+    
+            href_contents = {}
+            for href, tags in href_tags.items():
+                if len(tags) == 0:
+                    continue
+                tags = [clean_content(v.get_text().strip()) for v in tags]
+                href_contents[href] = tags
+    
+            return href_contents
+
+    def build_navi_content(self):
+        href_chunks = {}
+        for href in self.hrefs:
+            chunk = None
+            if '#' in href:
+                href, chunk = href.split('#')
+            
+            if href not in href_chunks:
+                href_chunks[href] = []
+            if chunk is not None:
+                href_chunks[href].append(chunk)
+
+        href_contents = {}
+        for href, chunks in href_chunks.items():
+            part_href_contents = self.extract_content(href, chunks)
+            for h, contents in part_href_contents.items():
+                href_contents[h] = contents
+                
+        # match content to navigation tree
+        def recur(ll):
+            for l in ll:
+                if l['href'] in h2c:
+                    l['content'] = '\n'.join(href_contents[l['href']])
+                if 'children' in l:
+                    recur(l['children'])
+        recur(self.navigation)
+
+
