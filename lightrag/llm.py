@@ -46,6 +46,7 @@ else:
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 
+
 @retry(
     stop=stop_after_attempt(3),
     wait=wait_exponential(multiplier=1, min=4, max=10),
@@ -112,6 +113,73 @@ async def openai_complete_if_cache(
 
     return content
 
+from dashscope import get_tokenizer
+from openai import OpenAI
+@retry(
+    stop=stop_after_attempt(3),
+    wait=wait_exponential(multiplier=1, min=4, max=10),
+    retry=retry_if_exception_type((RateLimitError, APIConnectionError, Timeout)),
+)
+async def qwen_api_complete_if_cache(
+    model,
+    prompt,
+    system_prompt=None,
+    history_messages=[],
+    base_url=None,
+    api_key=None,
+    api_version=None,
+    **kwargs,
+):
+    if api_key:
+        os.environ['OPENAI_API_KEY'] = api_key
+    if base_url:
+        os.environ['OPENAI_ENDPOINT'] = base_url
+
+    qwen_client = OpenAI(
+        api_key=os.getenv('OPENAI_API_KEY'),
+        base_url= os.getenv('OPENAI_ENDPOINT')#"https://dashscope.aliyuncs.com/compatible-mode/v1",
+    )
+    hashing_kv: BaseKVStorage = kwargs.pop("hashing_kv", None)
+    mode = kwargs.pop("mode", "default")
+
+    messages = []
+    if system_prompt:
+        messages.append({"role": "system", "content": system_prompt})
+    messages.extend(history_messages)
+    if prompt is not None:
+        messages.append({"role": "user", "content": prompt})
+
+    # Handle cache
+    args_hash = compute_args_hash(model, messages)
+    cached_response, quantized, min_val, max_val = await handle_cache(
+        hashing_kv, args_hash, prompt, mode
+    )
+    if cached_response is not None:
+        return cached_response
+
+    response = await qwen_client.chat.completions.create(
+        model=model, messages=messages, **kwargs
+    )
+    content = response.choices[0].message.content
+
+    # Save to cache
+    await save_to_cache(
+        hashing_kv,
+        CacheData(
+            args_hash=args_hash,
+            content=content,
+            model=model,
+            prompt=prompt,
+            quantized=quantized,
+            min_val=min_val,
+            max_val=max_val,
+            mode=mode,
+        ),
+    )
+
+    return content
+
+        
 
 @retry(
     stop=stop_after_attempt(3),
