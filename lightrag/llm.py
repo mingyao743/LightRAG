@@ -338,12 +338,6 @@ async def hf_model_if_cache(
         messages.append({"role": "system", "content": system_prompt})
     messages.extend(history_messages)
     messages.append({"role": "user", "content": prompt})
-
-    if use_vllm:
-       prompt_token_ids = [hf_tokenizer.apply_chat_template(messages, add_generation_prompt=True)]
-       outputs = hf_model.generate(prompt_token_ids=prompt_token_ids, sampling_params=sampling_params)
-       generated_text = outputs[0].outputs[0].text
-       return generated_text
     
     # Handle cache
     mode = kwargs.pop("mode", "default")
@@ -354,49 +348,54 @@ async def hf_model_if_cache(
     if cached_response is not None:
         return cached_response
 
-    input_prompt = ""
-    try:
-        input_prompt = hf_tokenizer.apply_chat_template(
-            messages, tokenize=False, add_generation_prompt=True
-        )
-    except Exception:
+    if not use_vllm:
+        input_prompt = ""
         try:
-            ori_message = copy.deepcopy(messages)
-            if messages[0]["role"] == "system":
-                messages[1]["content"] = (
-                    "<system>"
-                    + messages[0]["content"]
-                    + "</system>\n"
-                    + messages[1]["content"]
-                )
-                messages = messages[1:]
-                input_prompt = hf_tokenizer.apply_chat_template(
-                    messages, tokenize=False, add_generation_prompt=True
-                )
+            input_prompt = hf_tokenizer.apply_chat_template(
+                messages, tokenize=False, add_generation_prompt=True
+            )
         except Exception:
-            len_message = len(ori_message)
-            for msgid in range(len_message):
-                input_prompt = (
-                    input_prompt
-                    + "<"
-                    + ori_message[msgid]["role"]
-                    + ">"
-                    + ori_message[msgid]["content"]
-                    + "</"
-                    + ori_message[msgid]["role"]
-                    + ">\n"
-                )
-
-    input_ids = hf_tokenizer(
-        input_prompt, return_tensors="pt", padding=True, truncation=True
-    ).to("cuda")
-    inputs = {k: v.to(hf_model.device) for k, v in input_ids.items()}
-    output = hf_model.generate(
-        **input_ids, max_new_tokens=512, num_return_sequences=1, early_stopping=True
-    )
-    response_text = hf_tokenizer.decode(
-        output[0][len(inputs["input_ids"][0]) :], skip_special_tokens=True
-    )
+            try:
+                ori_message = copy.deepcopy(messages)
+                if messages[0]["role"] == "system":
+                    messages[1]["content"] = (
+                        "<system>"
+                        + messages[0]["content"]
+                        + "</system>\n"
+                        + messages[1]["content"]
+                    )
+                    messages = messages[1:]
+                    input_prompt = hf_tokenizer.apply_chat_template(
+                        messages, tokenize=False, add_generation_prompt=True
+                    )
+            except Exception:
+                len_message = len(ori_message)
+                for msgid in range(len_message):
+                    input_prompt = (
+                        input_prompt
+                        + "<"
+                        + ori_message[msgid]["role"]
+                        + ">"
+                        + ori_message[msgid]["content"]
+                        + "</"
+                        + ori_message[msgid]["role"]
+                        + ">\n"
+                    )
+    
+        input_ids = hf_tokenizer(
+            input_prompt, return_tensors="pt", padding=True, truncation=True
+        ).to("cuda")
+        inputs = {k: v.to(hf_model.device) for k, v in input_ids.items()}
+        output = hf_model.generate(
+            **input_ids, max_new_tokens=512, num_return_sequences=1, early_stopping=True
+        )
+        response_text = hf_tokenizer.decode(
+            output[0][len(inputs["input_ids"][0]) :], skip_special_tokens=True
+        )
+    else: #Gen by vllm
+       prompt_token_ids = [hf_tokenizer.apply_chat_template(messages, add_generation_prompt=True)]
+       outputs = hf_model.generate(prompt_token_ids=prompt_token_ids, sampling_params=sampling_params)
+       response_text = outputs[0].outputs[0].text
 
     # Save to cache
     await save_to_cache(
